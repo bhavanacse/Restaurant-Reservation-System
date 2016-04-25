@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Restaurant Reservation</title>
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">
+		        <p>Online Dining Reservation System</p>
+		      </a>
+		    </div>
+		  </div>
+		</nav>
+		<div class="col-md-12">
+			<div class="jumbotron col-md-12">
+			  <h3>Hello, Welcome to Dining Reservation System!</h3>
+			  <h5>Now, You can reserve seats in restaurants to dine for today and next coming week with only few clicks. 
+			  Please select your favourite restaurant and check the available slots to book reservation.</h5>
+			</div>
+		</div>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	</header>
+
+	<article id="restaurantDetails" class="col-md-12">
+	<div id="myValidationError" class="text-danger col-md-12 col-md-offset-9"></div>
+		<section id="restauranNames" class="col-md-1">
+			<h4 class="text-success">Restaurants</h4><br>
+			<script id="restaurantNamesTemplate" type="text/template">
+				<a href = "#<%=link%>"><strong><%=restaurantName.toUpperCase()%></strong></a>
+				<br><br>
+			</script>
+		</section>
+		
+		<section id="restaurantInfo" class="col-md-8">
+		    <script id="restaurantInfoTemplate" type="text/template">
+		    	 <div class="col-md-10"><h4 class="text-info"> <%=restaurantName.toUpperCase()%>'s vacancy schedule: </h4></div>
+		    	<div class="col-md-2"><input id="btnbookReservation" type="button" class="btn btn-success" value="Book Reservation"></input></div><br>
+		    	<div>
+					<table class="table table-striped">	
+						<th>
+							<% _.every(vacancy, function(dateValue, dateKey, dateObject){ %>
+								<% _.each(dateValue, function(timeValue, timeKey, timeObject){ %>
+									<td><%=timeKey%></td>
+								<% }) %> 
+								<% return false; %>
+							<% }) %>
+						</th>
+							<% _.each(vacancy, function(dateValue, dateKey, dateObject){ %>
+								<tr><td><%=dateKey%></td>
+									<% _.each(dateValue, function(timeValue, timeKey, timeObject){ %>
+										<td><%=timeValue%></td> 
+									<% }) %>
+								</tr>
+							<% }) %>
+					</table>
+				</div>
+			</script>
+		</section>
+		
+		<section id="reservationData" class="col-md-3">
+			<script id="reservationDataTemplate" type="text/template">
+				<div class="col-md-12">
+					<h4 class="text-info">Fill details for reservation</h4>
+				</div>
+				<form id="reserveRestaurantForm" class="form-horizontal">
+					<div class="form-group">
+						<label> Your Name </label>
+						<input id="personName" type="text" class="form-control" placeholder="Name"></input>
+					</div>
+					<div class="form-group">
+						<label> No. of persons </label>
+						<input id="personsCount" type="text" class="form-control" placeholder="No.of Members?"></input>
+					</div>
+					<div class="form-group">
+						<label> Booking required at </label>
+						<input type="text" id="datetimepicker" class="form-control" placeholder="Date and Time : 2016/04/10 10:22"></input>
+					</div>
+					<div class="form-group">
+						<label> Comments </label>
+						<textarea rows=4 cols=30 class="form-control" placeholder="Comments"></textarea>
+					</div>
+					<input type="submit" class="btn btn-success" value="Book"/>
+				</form>
+			</script>
+		</section>
+
+	</article>
+
+	<footer>
+		
+	</footer>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js "></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+	<script type="text/javascript" src="scripts/lib/backbone-validation.js"></script>
+
+	<script type="text/javascript" src="scripts/models/singleRestaurantModel.js"></script>
+	<script type="text/javascript" src="scripts/views/singleRestaurantNameView.js"></script>
+	<script type="text/javascript" src="scripts/views/singleRestaurantInfoView.js"></script>
+
+	<script type="text/javascript" src="scripts/models/singleBookingModel.js"></script>
+	<script type="text/javascript" src="scripts/views/singleBookingView.js"></script>
+
+	<script type="text/javascript" src="scripts/models/allRestaurants.js"></script>
+	<script type="text/javascript" src="scripts/views/allRestaurantsView.js"></script>
+
+	<script type="text/javascript" src="scripts/models/allBookings.js"></script>
+
+	<!--<script type="text/javascript" src="scripts/restaurantElementsFunc.js"></script>-->
+	<!--<script type="text/javascript" src="scripts/router.js"></script>-->
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<script>
+		
+		$(document).ready(function(){
+
+			//$('#reservationData').hide();
+			$('#reserveRestaurantForm #datetimepicker').datetimepicker();
+
+		});
+		
+	</script>
+
+	</body>
+	<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/>
+	<!--<script type="text/javascript" src="scripts/lib/jquery.js"></script>-->
+	<script type="text/javascript" src="scripts/lib/jquery.datetimepicker.full.min.js"></script>
+</html>
